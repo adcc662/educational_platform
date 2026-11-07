@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reservation_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('reservation_id')->constrained()->restrictOnDelete();
             $table->enum('payment_method', ['stripe', 'paypal', 'pay_later']);
             $table->string('transaction_id')->nullable()->unique();
             $table->decimal('amount', 10, 2);
@@ -25,8 +24,7 @@ return new class extends Migration
             $table->json('metadata')->nullable();
             $table->timestamps();
 
-            $table->index('transaction_id');
-            $table->index(['user_id', 'status']);
+            $table->index('status');
             $table->index('reservation_id');
             $table->index('due_date');
         });

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->restrictOnDelete();
+            $table->foreignId('course_id')->constrained()->restrictOnDelete();
             $table->foreignId('tax_rate_id')->nullable()->constrained()->onDelete('set null');
             $table->string('reservation_code', 20)->unique();
             $table->integer('quantity')->comment('Number of spots reserved');
@@ -25,11 +25,9 @@ return new class extends Migration
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'completed'])->default('pending');
             $table->timestamp('expires_at')->nullable()->comment('Cart expiration time');
             $table->timestamp('cancelled_at')->nullable();
-            $table->text('qr_code')->nullable();
             $table->timestamps();
 
             $table->index(['user_id', 'course_id']);
-            $table->index('reservation_code');
             $table->index(['status', 'created_at']);
             $table->index('expires_at');
         });

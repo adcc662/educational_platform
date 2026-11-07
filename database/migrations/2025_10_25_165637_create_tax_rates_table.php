@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('tax_rates', function (Blueprint $table) {
             $table->id();
-            $table->string('region', 100);
             $table->string('country_code', 2);
             $table->string('state_code', 10)->nullable();
             $table->decimal('tax_percentage', 5, 2);

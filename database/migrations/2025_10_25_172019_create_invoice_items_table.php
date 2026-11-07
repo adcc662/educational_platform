@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
-            $table->foreignId('reservation_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('reservation_id')->nullable()->constrained()->restrictOnDelete();
             $table->text('description');
             $table->integer('quantity');
             $table->decimal('unit_price', 10, 2);
-            $table->decimal('total_price', 10, 2);
             $table->timestamps();
 
             $table->index('invoice_id');

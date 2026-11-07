@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('trainers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->OnDelete('cascade');
+            $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
             $table->text('bio')->nullable();
             $table->string('specialization')->nullable();
             $table->decimal('hourly_rate', 10, 2)->nullable();
